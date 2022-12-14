@@ -31,7 +31,7 @@ jobs:
       - name: Install megacmd
         run: wget https://mega.nz/linux/repo/xUbuntu_22.04/amd64/megacmd-xUbuntu_22.04_amd64.deb; sudo apt install ./megacmd*.deb;
       - name: Download
-        run: yt-dlp --config-location yt-dlp-vcut.conf -u '${{ secrets.vuser }}' -p '${{ secrets.vpass }}' '${{ secrets.burl }}''${{ github.event.inputs.tut_id }}'
+        run: yt-dlp --config-location ./yt-dlp-vcut.conf -u '${{ secrets.vuser }}' -p '${{ secrets.vpass }}' '${{ secrets.burl }}''${{ github.event.inputs.tut_id }}'
       - name: Cut
         run: mkdir upload; ffmpeg -i tutorial.mp4 -vcodec copy -acodec copy -ss '${{ github.event.inputs.tut_s1 }}' -to '${{ github.event.inputs.tut_s2 }}' upload/"$(date +"%Y_%m_%d_%I_%M_%p_%s").mp4"
       - name: Upload

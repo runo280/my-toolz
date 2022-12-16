@@ -30,5 +30,5 @@ jobs:
       - name: Download
         run: yt-dlp -f '${{ github.event.inputs.quality }}' '${{ github.event.inputs.link }}'
       - name: Upload
-        run: mega-login ${{ secrets.muser }} '${{ secrets.mpass }}'; for f in upload/*; do mega-put $f; done;
+        run: mega-login ${{ secrets.muser }} '${{ secrets.mpass }}'; for f in upload/*; do mega-put "$f"; done;
       

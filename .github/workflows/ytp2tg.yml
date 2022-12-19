@@ -24,7 +24,7 @@ jobs:
       - name: Install yt-dlp
         run: sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp; sudo chmod a+rx /usr/local/bin/yt-dlp;
       - name: Install aria2 ffmpeg tree 
-        run: sudo apt install -y aria2 ffmpeg
+        run: sudo apt install -y aria2 ffmpeg; cp ytdlp/yt-plist.conf yt-dlp.conf;
       - name: Download
         run: yt-dlp -f '${{ github.event.inputs.quality }}' '${{ github.event.inputs.link }}'
       - name: View

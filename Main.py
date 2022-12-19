@@ -19,10 +19,10 @@ if __name__ == "__main__":
 
     tg = MyTelegram('seasion.session', api_id, api_hash, phone_number, password)
 
-    for filename in os.listdir("./upload/"):
+    for filename in os.listdir("upload/"):
         print(filename)
         time.sleep(10)
-        tg.send_file("./upload/" + filename)
+        tg.send_file("upload/" + filename)
 
     # save tg session
     with open("seasion.session", "rb") as img_file:

@@ -5,9 +5,7 @@ from telethon.tl.types import MessageEntityTextUrl
 
 import db
 from Telegram import MyTelegram
-from api import *
 from env import *
-from post import Proxy
 import os
 
 

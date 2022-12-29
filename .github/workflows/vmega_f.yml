@@ -21,9 +21,9 @@ jobs:
       - name: Install aria2 ffmpeg
         run: sudo apt install -y aria2 ffmpeg
       - name: Install megacmd
-        run: wget https://mega.nz/linux/repo/xUbuntu_22.04/amd64/megacmd-xUbuntu_22.04_amd64.deb; sudo apt install ./megacmd*.deb; cp ytdlp/yt-dlp-vcut.conf yt-dlp.conf;
+        run: wget https://mega.nz/linux/repo/xUbuntu_22.04/amd64/megacmd-xUbuntu_22.04_amd64.deb; sudo apt install ./megacmd*.deb; cp ytdlp/yt-dlp-vfull.conf yt-dlp.conf;
       - name: Download
-        run: yt-dlp --config-location ./yt-dlp-vfull.conf -u '${{ secrets.vuser }}' -p '${{ secrets.vpass }}' '${{ secrets.vburl }}''${{ github.event.inputs.id }}'
+        run: yt-dlp --config-location yt-dlp.conf -u '${{ secrets.vuser }}' -p '${{ secrets.vpass }}' '${{ secrets.vburl }}''${{ github.event.inputs.id }}'
       - name: Upload
         run: mega-login ${{ secrets.muser }} '${{ secrets.mpass }}'; for f in upload/*.mp4; do mega-put $f; done;
       

@@ -1,0 +1,39 @@
+name: vMegaC
+
+on:
+  workflow_dispatch:
+    inputs:
+      tut_id:
+        description: 'id'
+        required: true
+        default: '0'
+      tut_s1:
+        description: 'start'
+        required: true
+        default: '0'
+      tut_s2:
+        description: 'end'
+        required: true
+        default: '0'
+
+jobs:
+  Update:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Install yt-dlp
+        run: sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp; sudo chmod a+rx /usr/local/bin/yt-dlp;
+      - name: Install aria2 ffmpeg
+        run: sudo apt update; sudo apt install -y aria2 ffmpeg;
+      - name: Install megacmd
+        run: wget https://mega.nz/linux/repo/xUbuntu_22.04/amd64/megacmd-xUbuntu_22.04_amd64.deb; sudo apt install ./megacmd*.deb; cp ytdlp/yt-dlp-vcut.conf yt-dlp.conf;
+      - name: Download
+        run: yt-dlp -u '${{ secrets.vuser }}' -p '${{ secrets.vpass }}' '${{ secrets.vburl }}''${{ github.event.inputs.tut_id }}'
+      - name: Cut
+        run: mkdir upload; ffmpeg -i tutorial.mp4 -vcodec copy -acodec copy -ss '${{ github.event.inputs.tut_s1 }}' -to '${{ github.event.inputs.tut_s2 }}' upload/"$(date +"%Y_%m_%d_%I_%M_%p_%s").mp4"
+      - name: Upload
+        run: mega-login ${{ secrets.muser }} '${{ secrets.mpass }}'; for f in upload/*.mp4; do mega-put $f; done;
+      

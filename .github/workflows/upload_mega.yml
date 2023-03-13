@@ -1,0 +1,26 @@
+name: Upload Mega
+
+on:
+  workflow_dispatch:
+    inputs:
+      link:
+        description: 'Link'
+        required: true
+        default: '0'
+
+jobs:
+  Update:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Install aria2
+        run: sudo apt update; sudo apt install -y aria2;
+      - name: Install megacmd
+        run: wget https://mega.nz/linux/repo/xUbuntu_22.04/amd64/megacmd-xUbuntu_22.04_amd64.deb; sudo apt install ./megacmd*.deb;
+      - name: download
+        run: mkdir upload; aria2c -x16 -c -s16 -k1M -d upload/ "${{ github.event.inputs.link }}"
+      - name: upload
+        run: mega-login ${{ secrets.muser }} '${{ secrets.mpass }}'; for f in upload/*; do mega-put $f; done;

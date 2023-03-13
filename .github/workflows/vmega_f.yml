@@ -1,0 +1,29 @@
+name: vMegaF
+
+on:
+  workflow_dispatch:
+    inputs:
+      id:
+        description: 'id'
+        required: true
+        default: '0'
+
+jobs:
+  Update:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Install yt-dlp
+        run: sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp; sudo chmod a+rx /usr/local/bin/yt-dlp;
+      - name: Install aria2 ffmpeg
+        run: sudo apt update; sudo apt install -y aria2 ffmpeg;
+      - name: Install megacmd
+        run: wget https://mega.nz/linux/repo/xUbuntu_22.04/amd64/megacmd-xUbuntu_22.04_amd64.deb; sudo apt install ./megacmd*.deb; cp ytdlp/yt-dlp-vfull.conf yt-dlp.conf;
+      - name: Download
+        run: yt-dlp --config-location yt-dlp.conf -u '${{ secrets.vuser }}' -p '${{ secrets.vpass }}' '${{ secrets.vburl }}''${{ github.event.inputs.id }}'
+      - name: Upload
+        run: mega-login ${{ secrets.muser }} '${{ secrets.mpass }}'; for f in upload/*.mp4; do mega-put $f; done;
+      

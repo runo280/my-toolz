@@ -18,7 +18,7 @@ if __name__ == "__main__":
     with open("seasion.session", "wb") as sfile:
         sfile.write(decoded_string)
 
-    tg = MyTelegram('seasion.session', api_id, api_hash, phone_number, password)
+    tg = MyTelegram()
 
     for filename in os.listdir("upload"):
         print(filename)

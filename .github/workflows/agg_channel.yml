@@ -1,0 +1,39 @@
+name: Walk and Publish 
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  '*/30 * * * *' # every 30 min
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run
+        env:
+          tgApiId: ${{ secrets.tgApiId }}
+          tgApiHash: ${{ secrets.tgApiHash }}
+          tgPhone: ${{ secrets.tgPhone }}
+          tgPass: ${{ secrets.tgPass }}
+          eitaaApiUrl: ${{ secrets.eitaaApiUrl }}
+          eitaaBotToken: ${{ secrets.eitaaBotToken }}
+          mongoUer: ${{ secrets.mongoUer }}
+          mongoPass: ${{ secrets.mongoPass }}
+          mongoUrl: ${{ secrets.mongoUrl }}
+          agg_channel: ${{ secrets.agg_channel }}
+        run: |
+          python AGG_Main.py

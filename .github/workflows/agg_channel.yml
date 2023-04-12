@@ -28,7 +28,7 @@ jobs:
           tgPass: ${{ secrets.tgPass }}
           eitaaApiUrl: ${{ secrets.eitaaApiUrl }}
           eitaaBotToken: ${{ secrets.eitaaBotToken }}
-          mongoUer: ${{ secrets.mongoUer }}
+          mongoUser: ${{ secrets.mongoUser }}
           mongoPass: ${{ secrets.mongoPass }}
           mongoUrl: ${{ secrets.mongoUrl }}
           agg_channel: ${{ secrets.agg_channel }}

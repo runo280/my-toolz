@@ -1,12 +1,9 @@
-name: Walk and Publish 
+name: AGG Channel
 
 on:
   workflow_dispatch:
   schedule:
     - cron:  '*/30 * * * *' # every 30 min
-  push:
-    branches:
-      - main
 
 jobs:
   build:

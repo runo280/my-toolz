@@ -47,6 +47,13 @@ class MyDatabase:
         last_id = query['pid']
         return _id > last_id
 
+    def add_to_db(self, mList):
+        for p in mList:
+            query = {'pid': p.pid}
+            if self._table.count_documents(query) == 0:
+                self._table.insert_one(p.get_dic())
+                # print(x.inserted_id)
+
     def set_published(self, tid, eid):
         query = {'$set': {'is_pub': True, 'pub_id': eid}}
         self._table.update_one({'pid': tid}, query)

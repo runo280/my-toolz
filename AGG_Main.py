@@ -96,7 +96,7 @@ if __name__ == "__main__":
         else:
             if is_offline():
                 print('no file')
-            r = send_message(text)
+            r = send_message(target_channel_id, text)
             if r['ok']:
                 if is_offline():
                     print(r)
